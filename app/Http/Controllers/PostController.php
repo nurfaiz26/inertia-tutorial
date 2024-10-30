@@ -27,15 +27,21 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store()
     {
-        //
+        $fields = request()->validate([
+            'body' => 'required|min:3'
+        ]);
+
+        Post::create($fields);
+
+        return redirect('/');
     }
 
     /**
@@ -57,9 +63,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update()
     {
-        //
+        dd(request()->all());
     }
 
     /**

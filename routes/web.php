@@ -1,17 +1,18 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    sleep(2);
+// Route::get('/', function () {
+//     sleep(2);
 
-    return Inertia::render('Home', ['name' => 'Faiz']);
-});
+//     return Inertia::render('Home', ['name' => 'Faiz']);
+// });
 
 // Route::inertia('/', 'Home');
 
-Route::get('about', function () {
-    return inertia('About/About');
-});
+// posts routes
+Route::get('/', [PostController::class, 'index']);
+Route::resource('posts', PostController::class)->except('index');
 

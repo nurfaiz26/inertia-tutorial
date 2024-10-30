@@ -13,9 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(5);
+        $posts = Post::latest()->get();
 
-        return inertia('Home');
+        return inertia('Home', ['name' => 'Faiz', 'posts' => $posts]);
     }
 
     /**

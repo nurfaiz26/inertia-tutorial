@@ -13,9 +13,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+        $listCount = 5;
+        $posts = Post::latest()->paginate($listCount);
 
-        return inertia('Home', ['name' => 'Faiz', 'posts' => $posts]);
+        $currentIndex = ($listCount * (request()->query('page', 1) - 1));
+
+
+        return inertia('Home', ['name' => 'Faiz', 'posts' => $posts, 'currentIndex' => $currentIndex]);
     }
 
     /**

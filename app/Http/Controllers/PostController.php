@@ -49,7 +49,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return inertia('Show', ['post' => $post]);
     }
 
     /**
@@ -63,9 +63,17 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Post $post)
     {
-        dd(request()->all());
+        $fields = request()->validate([
+            'body' => 'required|min:3'
+        ]);
+
+        $post->update(
+            $fields,
+        );
+
+        return back()->with('update', 'The post updated!');
     }
 
     /**
@@ -73,6 +81,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect('/')->with('message', 'The post deleted!');
     }
 }

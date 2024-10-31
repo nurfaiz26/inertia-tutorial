@@ -1,10 +1,26 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link, usePage, Head } from "@inertiajs/react";
+import { useState } from "react";
 
 const Home = ({ name, posts, currentIndex }) => {
-    console.log(currentIndex);
+    const { flash } = usePage().props
+    const { component } = usePage();
+
+    const [flashMessage, setFlashMessage] = useState(flash.message);
+
+    setTimeout(() => {
+        setFlashMessage(null);
+    }, 2000);
 
     return (
         <>
+            <Head title={component} >
+                <meta head-key="home" name="home" content="This is home page" />
+            </ Head>
+
+            {flashMessage && (
+                <div className="absolute p-4 top-24 right-6 bg-red-500 rounded-lg text-white font-bold">{flashMessage}</div>
+            )}
+
             <h1 className="mt-10 text-center text-xl font-bold">Hello {name}!</h1>
 
             <div className="mx-10">
@@ -15,7 +31,7 @@ const Home = ({ name, posts, currentIndex }) => {
                             <span>{new Date(post.created_at).toLocaleTimeString()}</span>
                         </div>
 
-                        <Link preserveScroll href="#" className="text-black text-lg"><span className="font-bold">{(index + 1 + currentIndex) + '. '}</span>{post.body}</Link>
+                        <Link preserveScroll href={`/posts/${post.id}`} className="text-black text-lg"><span className="font-bold">{(index + 1 + currentIndex) + '. '}</span>{post.body}</Link>
                     </div>
 
                 ))}
